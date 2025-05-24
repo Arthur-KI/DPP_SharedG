@@ -1,0 +1,78 @@
+# DPP_SharedG: A Dynamic Path-Controlled Perceptron for Algorithmic Logic
+
+**Author/Discoverer:** Arthur Heyde
+**Last Updated:** May 24, 2025
+**License:** MIT License
+
+## 1. Project Overview
+
+This project introduces the **Dynamic Path-controlled Perceptron with Shared Gating (DPP_SharedG)** – a novel neural layer architecture designed to learn complex, state-dependent, and programmatic logic with high parameter efficiency. The core motivation was to investigate the extent to which a single, specialized layer could tackle tasks that would traditionally require complex, multi-layered models or even explicit algorithmic implementations.
+
+Experiments demonstrate that a simple base model (`DPPModelBase`), primarily consisting of a single `DPPLayer_SharedG`, possesses a remarkable ability for rapid convergence and precise simulation of systems involving internal state management and conditional execution. The exploration successfully progressed from simulating basic logic gates and 1-bit CPU cores (as demonstrated in FPLA V1 / Test20) to simplified 8-bit (Test24) and 32-bit CPU logic (Test26), underscoring the architecture's scalability in terms of data width and instruction logic complexity.
+
+## 2. The `DPPLayer_SharedG` Architecture
+
+The `DPPLayer_SharedG` is the centerpiece of this work. This layer implements a dynamic path control mechanism, allowing each of its $H$ internal processing units (`dpp_units`) to respond flexibly to input data $x \in \mathbb{R}^{D_{in}}$.
+
+**Core Mechanisms per Unit $j$:**
+
+1.  **Two Parallel Processing Paths (A and B):** Each path performs a linear transformation of the input:
+    * Path A: $z_{Aj} = W_{Aj}x + b_{Aj}$
+    * Path B: $z_{Bj} = W_{Bj}x + b_{Bj}$
+2.  **Controlled Gating Mechanism:**
+    * A **shared path** first extracts contextual features $x_{shared\_g}$ from the input $x$, which are utilized by all $H$ units ($x_{shared\_g} = W_{g\_shared}x + b_{g\_shared}$).
+    * Subsequently, each unit $j$ computes **unit-specific gating logits** $g_j$ from these shared features ($g_j = W_{g\_unit_j}x_{shared\_g} + b_{g\_unit_j}$).
+    * A **mixing coefficient** $\alpha_j = \text{sigmoid}(g_j)$ is generated, determining the weighting of paths A and B.
+3.  **Dynamic Output:** The final output of the unit (before further activations in the overall model) is a weighted sum of the two paths:
+    $z_{final_j} = \alpha_j \cdot z_{Aj} + (1-\alpha_j) \cdot z_{Bj}$.
+
+This structure allows the layer to adaptively decide, for each unit and each input, which type of transformation (or combination thereof) is most suitable.
+
+The **overall model (`DPPModelBase`)** typically integrates this layer as follows:
+`Input -> DPPLayer_SharedG -> ReLU -> Linear Output Layer -> Logits`
+
+## 3. Milestones of Experimental Evaluation
+
+The capabilities of the `DPP_SharedG` were demonstrated through a series of tasks, ranging from basic logic to CPU core simulations:
+
+* **Fundamental Logic and State Management:**
+    * **Conditional Accumulation (Test 7):** Achieved 100% accuracy with only 129 parameters, demonstrating responsiveness to external context bits.
+    * **State-Controlled Counter with Reset (Test 9):** Attained 100% accuracy with 385 parameters, showcasing handling of multi-value internal states and external control signals.
+* **Simulation of Programmable Logic Units (CPU Cores):**
+    * **Simple Instruction Interpreter (Test 11):** Learned a set of 8 instructions and register manipulation with 1167 parameters, achieving 100% accuracy.
+    * **1-Bit CPU Core ("FPLA V1" / Test20):** A significant achievement was the 100% accurate simulation of a 1-bit microcontroller core. This involved 18 complex instructions (including memory access, stack operations, flags, jumps, and calls) and was accomplished with only ~18k parameters. The model also correctly executed specific test programs.
+    * **Simplified 8-Bit CPU (Test24 logic):** The architecture proved its scalability to an 8-bit data width for registers, memory, and ALU operations. Using ~23k parameters, it achieved 100% accuracy in training, testing, and during the execution of a dedicated 8-bit test program.
+    * **Simplified 32-Bit CPU (Test26 logic):** The most demanding test to date demonstrated that the model (with ~29k-41k parameters, depending on the specific run's configuration) can also learn to process 32-bit data paths for a reduced instruction set. It achieved 100% accuracy on random data and during the execution of a test program, highlighting its capability to handle significantly increased data complexity with precision, at least in a simplified setup.
+
+## 4. Summary of Key Properties
+
+The experiments suggest that the `DPP_SharedG` approach offers the following advantages:
+
+* **High Parameter Efficiency:** Capable of learning complex, rule-based logic with relatively few parameters.
+* **Fast Convergence:** Often achieves high or perfect accuracy القيم for the tested logic tasks very quickly.
+* **Algorithmic Inference:** Learns underlying procedural rules rather than just patterns, enabling the execution of program-like sequences.
+* **Effective State and Context Management:** Dynamically adapts its internal processing based on inputs (data, context, previous states).
+* **Scalability with Data Width:** Successful simulations of 1-bit, 8-bit, and (simplified) 32-bit CPU logic indicate good scalability.
+
+## 5. Conclusion and Future Outlook
+
+The `DPPLayer_SharedG` has proven to be an exceptionally powerful and efficient architecture for learning and executing complex, state-dependent, and program-like logic tasks. Its ability to learn the essence of small, programmable processors—extending to operations on 32-bit data paths—with high efficiency and accuracy is noteworthy.
+
+Future research directions could include:
+
+* **Expanding CPU Simulations:** Testing with more complete 32-bit or even 64-bit architectures (larger memory, more registers, complex instruction sets and addressing modes, stack operations, interrupts).
+* **Generalization Studies:** Investigating the ability to process unseen instructions or program structures.
+* **Architectural Variations:** Analyzing the impact of `dpp_units`, `shared_g_dim`, and potentially stacked `DPPLayer_SharedG` layers for even more complex tasks.
+* **Comparisons:** Benchmarking against specialized architectures for program synthesis or algorithmic learning.
+
+The potential of architectures with dynamic, internal path control for algorithmic learning is significant, and the results achieved এখানে provide a strong foundation for further exploration.
+
+## Code and Execution
+
+The source code for the model implementations (`DPPLayer_SharedG`, `DPPModelBase`), data generators for the various CPU simulations, and training scripts are available in this repository.
+* The core components `DPPLayer_SharedG` and `DPPModelBase` are defined within the respective `TestXX.py` files.
+* Examples of CPU simulations can be found in `Test20.py` (1-Bit FPLA), the logic of `Test24.py` (8-Bit CPU), and `Test26.py` (simplified 32-Bit CPU).
+
+To run a test:
+```bash
+python TestXX.py
