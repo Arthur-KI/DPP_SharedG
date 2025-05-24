@@ -1,8 +1,8 @@
 # DPP_SharedG: Ein Dynamisch Pfad-gesteuertes Perzeptron für algorithmische Logik
 
-**Urheber/Entdecker:** [Ihr Name/GitHub-Benutzername]
+**Urheber/Entdecker:** Arthur Heyde
 **Datum der letzten Aktualisierung:** 24. Mai 2025
-**Lizenz:** [Ihre gewählte Lizenz, z.B. MIT License]
+**Lizenz:** [MIT License]
 
 ## 1. Projektübersicht
 
