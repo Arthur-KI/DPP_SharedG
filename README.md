@@ -53,5 +53,3 @@ Die DPP_SharedG-Architektur hat eine außergewöhnliche Leistungsfähigkeit und 
     Skalierbarkeit bezüglich der Datenbreite: Die erfolgreiche Simulation von 8-Bit- und 32-Bit-CPUs (Tests 24 & 26) zeigt, dass die Architektur auch mit breiteren Datenwegen effektiv umgehen kann.
 
 Zusammenfassend hat sich DPP_SharedG als eine leistungsstarke und effiziente Architektur für Aufgaben erwiesen, die erlernte prozedurale Logik und zustandsbehaftete Berechnungen erfordern, und übertrifft dabei oft die Erwartungen an Modelle mit vergleichbarer Parameteranzahl.
-
-Dieser Text fasst die Kernaspekte zusammen und verwendet Informationen aus Ihren Readme-Dateien. Sie können dies als Basis für Ihre GitHub-Readme verwenden und bei Bedarf weiter anpassen.
