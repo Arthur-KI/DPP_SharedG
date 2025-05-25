@@ -1,5 +1,5 @@
 Dynamisch Pfad-gesteuertes Perzeptron mit Geteiltem Gating (DPP_SharedG)
-English
+English:
 
 The Dynamic Path-controlled Perceptron with Shared Gating (DPP_SharedG) is a novel neural network layer architecture designed for high parameter efficiency and robustness in tackling complex, conditional, and stateful tasks. The core idea is to equip the layer with an internal, learnable, data-driven logic that allows it to dynamically choose or combine different processing paths for incoming data.
 
@@ -26,7 +26,9 @@ The DPP_SharedG architecture has demonstrated exceptional performance and effici
     Scalability with Data Width: The successful simulation of 8-bit and 32-bit CPUs (Tests 24 & 26) indicates that the architecture can handle wider data paths effectively.
 
 In summary, the DPP_SharedG has proven to be a powerful and efficient architecture for tasks requiring learned procedural logic and stateful computation, often outperforming expectations for models with a comparable parameter count.
-Deutsch
+
+
+Deutsch:
 
 Das Dynamisch Pfad-gesteuerte Perzeptron mit Geteiltem Gating (DPP_SharedG) ist eine neuartige Neuronenschicht-Architektur, die für hohe Parametereffizienz und Robustheit bei der Bewältigung komplexer, bedingter und zustandsbehafteter Aufgaben entwickelt wurde. Die Kernidee besteht darin, die Schicht mit einer internen, erlernbaren und datengesteuerten Logik auszustatten, die es ihr ermöglicht, dynamisch verschiedene Verarbeitungspfade für eingehende Daten auszuwählen oder zu kombinieren.
 
